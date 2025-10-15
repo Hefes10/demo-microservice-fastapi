@@ -7,7 +7,7 @@ pipeline {
     CONTAINER_NAME = "ci-ms-${env.BUILD_NUMBER}"
 
     // Usa SSH si tu repo de tests es privado (recomendado en tu entorno)
-    TESTS_REPO     = "git@github.com:Hefes10/demo-api-tests-behave.git"
+    TESTS_REPO     = "git@github.com:Hefes10/demo-api-tests-behave"
     TESTS_BRANCH   = "main"
 
     // Para GitHub CLI (merge de PR)
@@ -88,7 +88,7 @@ pipeline {
               # Derivar org/repo sin '.git'
               REPO_URL=$(git config --get remote.origin.url)
               REPO=$(echo "$REPO_URL" | sed -E 's#.*github.com[:/](.*?)(\\.git)?$#\\1#' | sed 's/\\.git$//')
-              gh auth status || gh auth login --with-token <<< "$GH_TOKEN"
+              gh auth status || true
               gh pr merge "$CHANGE_ID" --merge --delete-branch --repo "$REPO" --auto=false
             '''
           }
