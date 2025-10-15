@@ -106,7 +106,7 @@ pipeline {
               export GH_TOKEN="$GH_TOKEN"
               REPO_URL=$(git config --get remote.origin.url)
               REPO=$(echo "$REPO_URL" | sed -E 's#.*github.com[:/](.*?)(\\.git)?$#\\1#' | sed 's/\\.git$//')
-              gh auth status || gh auth login --with-token <<< "$GH_TOKEN"
+              gh auth status || true
               gh pr comment "$CHANGE_ID" --repo "$REPO" --body "❌ CI falló: revisar logs de Jenkins (build #$BUILD_NUMBER). No se realizó el merge."
             '''
           }
